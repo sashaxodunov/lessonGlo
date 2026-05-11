@@ -5,6 +5,7 @@ import smoothScroll from "./module/smoothScroll";
 import inputValidation from "./module/inputValidation";
 import blur from "./module/blur";
 import tabs from './module/tabs'
+import slider from './module/slider'
 
 timer("20 may 2026");
 menu()
@@ -13,3 +14,4 @@ smoothScroll()
 inputValidation()
 blur()
 tabs()
+slider()
