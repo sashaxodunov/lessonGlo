@@ -1,34 +1,53 @@
-const slider = () => {
-  const sliderBlock = document.querySelector(".portfolio-content");
-  const slides = document.querySelectorAll(".portfolio-item");
+const slider = ({
+  sliderSelector,
+  slideSelector,
+  nextBtnSelector,
+  prevBtnSelector,
+  activeSlideClass = "slide-active",
+  activeDotClass = "dot-active",
+}) => {
+  const sliderBlock = document.querySelector(sliderSelector);
 
-  // Создание контейнера для точек
+  // Проверка существования слайдера
+  if (!sliderBlock) {
+    return;
+  }
+
+  const slides = document.querySelectorAll(slideSelector);
+
+  // Проверка существования слайдов
+  if (!slides.length) {
+    return;
+  }
+
+  // Создание контейнера точек
   const dotsWrap = document.createElement("ul");
   dotsWrap.classList.add("portfolio-dots");
 
-  // Создание точек по количеству слайдов
+  // Создание точек
   slides.forEach((_, index) => {
     const dot = document.createElement("li");
 
     dot.classList.add("dot");
 
     if (index === 0) {
-      dot.classList.add("dot-active");
+      dot.classList.add(activeDotClass);
     }
 
     dotsWrap.append(dot);
   });
 
-  // Добавляем точки в слайдер
   sliderBlock.append(dotsWrap);
 
-  // Получаем созданные точки
-  const dots = document.querySelectorAll(".dot");
+  const dots = dotsWrap.querySelectorAll(".dot");
 
   const timeInterval = 2000;
 
   let currentSlide = 0;
   let interval;
+
+  // Активируем первый слайд
+  slides[currentSlide].classList.add(activeSlideClass);
 
   const prevSlide = (elems, index, strClass) => {
     elems[index].classList.remove(strClass);
@@ -39,8 +58,8 @@ const slider = () => {
   };
 
   const autoSlide = () => {
-    prevSlide(slides, currentSlide, "portfolio-item-active");
-    prevSlide(dots, currentSlide, "dot-active");
+    prevSlide(slides, currentSlide, activeSlideClass);
+    prevSlide(dots, currentSlide, activeDotClass);
 
     currentSlide++;
 
@@ -48,8 +67,8 @@ const slider = () => {
       currentSlide = 0;
     }
 
-    nextSlide(slides, currentSlide, "portfolio-item-active");
-    nextSlide(dots, currentSlide, "dot-active");
+    nextSlide(slides, currentSlide, activeSlideClass);
+    nextSlide(dots, currentSlide, activeDotClass);
   };
 
   const startSlide = (timer = 1500) => {
@@ -68,16 +87,16 @@ const slider = () => {
       return;
     }
 
-    prevSlide(slides, currentSlide, "portfolio-item-active");
-    prevSlide(dots, currentSlide, "dot-active");
+    prevSlide(slides, currentSlide, activeSlideClass);
+    prevSlide(dots, currentSlide, activeDotClass);
 
-    if (e.target.matches("#arrow-right")) {
+    if (e.target.matches(nextBtnSelector)) {
       currentSlide++;
-    } else if (e.target.matches("#arrow-left")) {
+    } else if (e.target.matches(prevBtnSelector)) {
       currentSlide--;
     } else if (e.target.classList.contains("dot")) {
       dots.forEach((dot, index) => {
-        if (e.target === dot) {
+        if (dot === e.target) {
           currentSlide = index;
         }
       });
@@ -91,8 +110,8 @@ const slider = () => {
       currentSlide = slides.length - 1;
     }
 
-    nextSlide(slides, currentSlide, "portfolio-item-active");
-    nextSlide(dots, currentSlide, "dot-active");
+    nextSlide(slides, currentSlide, activeSlideClass);
+    nextSlide(dots, currentSlide, activeDotClass);
   });
 
   sliderBlock.addEventListener("mouseover", (e) => {
