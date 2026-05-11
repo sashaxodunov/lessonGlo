@@ -1,32 +1,32 @@
-// menu.js
 const menu = () => {
   const menuEl = document.querySelector("menu");
-  if (!menuEl) return;
+  const burgerBtn = document.querySelector(".menu");
+  if (!menuEl || !burgerBtn) return;
 
-  const toggleMenu = () => menuEl.classList.toggle("active-menu");
-  const closeMenu = () => menuEl.classList.remove("active-menu");
+  const toggleMenu = (e) => {
+    const burger = e.target.closest(".menu");
+    const close = e.target.closest(".close-btn");
+    const link = e.target.closest("menu ul li a");
+    const insideMenu = e.target.closest("menu");
 
-  document.addEventListener("click", (e) => {
-    const burgerBtn = e.target.closest(".menu"); // кнопка-бургер
-    const closeBtn = e.target.closest(".close-btn"); // крестик
-    const menuLink = e.target.closest("menu ul li a"); // пункты меню
-
-    if (burgerBtn) {
+    if (burger) {
       e.preventDefault();
-      toggleMenu();
+      menuEl.classList.toggle("active-menu");
       return;
     }
 
-    if (closeBtn) {
-      e.preventDefault();
-      closeMenu();
+    if (close || link) {
+      if (close) e.preventDefault();
+      menuEl.classList.remove("active-menu");
       return;
     }
 
-    if (menuLink) {
-      closeMenu();
+    if (!insideMenu && menuEl.classList.contains("active-menu")) {
+      menuEl.classList.remove("active-menu");
     }
-  });
+  };
+
+  document.addEventListener("click", toggleMenu);
 };
 
 export default menu;
