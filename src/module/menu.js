@@ -1,18 +1,32 @@
+// menu.js
 const menu = () => {
-  const menuBtn = document.querySelector('.menu');
-  const menu = document.querySelector('menu');
-  const closeBtn = document.querySelector('.close-btn');
-  const menuItems = document.querySelectorAll('ul>li>a');
+  const menuEl = document.querySelector("menu");
+  if (!menuEl) return;
 
-  const handleMenu = () => {
-    menu.classList.toggle('active-menu');
-  }
+  const toggleMenu = () => menuEl.classList.toggle("active-menu");
+  const closeMenu = () => menuEl.classList.remove("active-menu");
 
-  menuBtn.addEventListener('click', handleMenu);
-  closeBtn.addEventListener('click', handleMenu);
+  document.addEventListener("click", (e) => {
+    const burgerBtn = e.target.closest(".menu"); // кнопка-бургер
+    const closeBtn = e.target.closest(".close-btn"); // крестик
+    const menuLink = e.target.closest("menu ul li a"); // пункты меню
 
-  menuItems.forEach(menuItem => menuItem.addEventListener('click', handleMenu));
-}
- 
+    if (burgerBtn) {
+      e.preventDefault();
+      toggleMenu();
+      return;
+    }
+
+    if (closeBtn) {
+      e.preventDefault();
+      closeMenu();
+      return;
+    }
+
+    if (menuLink) {
+      closeMenu();
+    }
+  });
+};
 
 export default menu;
