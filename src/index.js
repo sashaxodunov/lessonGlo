@@ -6,6 +6,7 @@ import inputValidation from "./module/inputValidation";
 import blur from "./module/blur";
 import tabs from "./module/tabs";
 import slider from "./module/slider";
+import calc from "./module/calc";
 
 timer("20 may 2026");
 menu();
@@ -14,6 +15,7 @@ smoothScroll();
 inputValidation();
 blur();
 tabs();
+calc(100);
 
 slider({
   sliderSelector: ".portfolio-content",
