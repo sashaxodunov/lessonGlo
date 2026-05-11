@@ -1,6 +1,28 @@
 const slider = () => {
   const sliderBlock = document.querySelector(".portfolio-content");
   const slides = document.querySelectorAll(".portfolio-item");
+
+  // Создание контейнера для точек
+  const dotsWrap = document.createElement("ul");
+  dotsWrap.classList.add("portfolio-dots");
+
+  // Создание точек по количеству слайдов
+  slides.forEach((_, index) => {
+    const dot = document.createElement("li");
+
+    dot.classList.add("dot");
+
+    if (index === 0) {
+      dot.classList.add("dot-active");
+    }
+
+    dotsWrap.append(dot);
+  });
+
+  // Добавляем точки в слайдер
+  sliderBlock.append(dotsWrap);
+
+  // Получаем созданные точки
   const dots = document.querySelectorAll(".dot");
 
   const timeInterval = 2000;
