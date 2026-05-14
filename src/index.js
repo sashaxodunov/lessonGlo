@@ -7,6 +7,7 @@ import blur from "./module/blur";
 import tabs from "./module/tabs";
 import slider from "./module/slider";
 import calc from "./module/calc";
+import anime from "./module/anime";
 
 timer("20 may 2026");
 menu();
@@ -16,6 +17,7 @@ inputValidation();
 blur();
 tabs();
 calc(100);
+anime()
 
 slider({
   sliderSelector: ".portfolio-content",
